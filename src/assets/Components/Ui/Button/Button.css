@@ -1,0 +1,27 @@
+.btnStyle {
+  border: none;
+  padding: 9px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.btnLightMode {
+  background-color: #b6cfe3;
+  color: #2f2f2f;
+}
+
+.btnLightMode:hover {
+  background-color: #a2c3dc;
+  transform: scale(1.07) rotate(2deg);
+}
+
+.btnDarkMode {
+  background-color: #393027;
+  color: white;
+}
+
+.btnDarkMode:hover {
+  background-color: #4a3a2f;
+  transform: scale(1.07) rotate(-2deg);
+}

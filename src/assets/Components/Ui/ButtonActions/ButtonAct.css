@@ -1,0 +1,20 @@
+.btnAct {
+  border: none;
+  padding: 7px 10px;
+  border-radius: 10px;
+
+  color: white;
+  transition: transform 0.2s ease-in;
+}
+
+.btnAct:hover {
+  transform: scale(1.02);
+}
+
+.btnActUpdate {
+  background-color: #0d6efd;
+}
+
+.btnActDelete {
+  background-color: #dc3545;
+}

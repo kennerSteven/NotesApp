@@ -1,0 +1,18 @@
+input {
+  border: none;
+  padding: 12px 6px;
+  border-radius: 10px;
+  border: 1px solid #efefef;
+}
+
+input:focus {
+  outline: none;
+}
+
+.error-message {
+  color: red;
+}
+
+.input-error {
+  border: 1px solid red;
+}

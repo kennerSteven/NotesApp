@@ -1,0 +1,10 @@
+.formContent {
+  width: 700px;
+}
+
+.formContainer {
+  background-color: rgb(255, 255, 255);
+  padding: 25px 30px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgb(121, 121, 121);
+}

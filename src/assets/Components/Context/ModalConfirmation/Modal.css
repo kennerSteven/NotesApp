@@ -1,0 +1,54 @@
+.btnOutline {
+  background-color: transparent;
+  border: none;
+  color: rgb(55, 55, 55);
+  transition: transform 0.2s ease-in;
+}
+.btnOutline:hover {
+  transform: scale(1.04);
+}
+
+.btnAction {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: rgb(34, 34, 34);
+  color: rgb(234, 234, 234);
+  transition: transform 0.2s ease-in, background-color 0.2s ease-in;
+}
+
+.btnAction:hover {
+  transform: scale(1.03) rotate(1deg);
+  background-color: rgb(56, 56, 56);
+}
+
+.titleModal {
+  font-size: 22px;
+  font-weight: 600;
+  padding: 8px 0;
+}
+
+.modalContainer {
+  position: fixed;
+
+  width: 500px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 5px 15px rgba(91, 91, 91, 0.3);
+  border: none;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.115);
+
+  backdrop-filter: blur(1px);
+
+  z-index: 1000;
+}
