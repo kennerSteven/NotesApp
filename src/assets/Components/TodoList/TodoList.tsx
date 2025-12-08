@@ -19,6 +19,9 @@ export default function TodoList() {
   const [showEdit, setShowEdit] = useState<boolean>(false);
   const [tasks, setTasks] = useState<task[]>([]);
 
+
+
+  
   const { openModal } = useModal();
   const { show } = useToast();
 
@@ -48,7 +51,7 @@ export default function TodoList() {
   function showToaster() {
     show({
       title: "Accion completada",
-      text: "La accion fue completada exitosamente",
+      text: "La accion fue completada exitosamente!",
       icon: "success",
     });
   }
