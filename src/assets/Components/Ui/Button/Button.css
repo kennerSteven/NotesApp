@@ -17,11 +17,11 @@
 }
 
 .btnDarkMode {
-  background-color: #393027;
+  background-color: #262628;
   color: white;
 }
 
 .btnDarkMode:hover {
-  background-color: #4a3a2f;
+   background-color: #262628;
   transform: scale(1.07) rotate(-2deg);
 }

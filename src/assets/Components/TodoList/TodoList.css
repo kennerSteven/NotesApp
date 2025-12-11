@@ -1,6 +1,40 @@
 .toDoContainer {
-  background-color: rgb(248, 248, 248);
+  background-color: rgb(255, 255, 255);
   padding: 15px 25px;
+}
+
+.contentTodo {
+  width: 1200px;
+  height: 800px;
   border-radius: 20px;
-  box-shadow: 0 2px 10px rgb(140, 140, 140);
+}
+
+.menuInputTitle {
+  width: 100%;
+  position: relative;
+}
+
+.contentMenuInput {
+  position: absolute;
+  bottom: 0;
+}
+
+.Task {
+  border-top: 1px solid rgb(228, 228, 228);
+  border-bottom: 1px solid rgb(228, 228, 228);
+}
+
+.TaskContainer {
+  width: 500px;
+}
+
+.radioInput {
+  height: 30px;
+  width: 20px;
+}
+
+.nameTask {
+  font-weight: 600;
+  font-size: 20px;
+  padding: 3px 0;
 }

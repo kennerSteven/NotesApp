@@ -16,6 +16,7 @@ export default function Input({
           {label}
         </label> */}
         <input
+        className="inputTask"
           type="text"
           name={name}
           value={value}

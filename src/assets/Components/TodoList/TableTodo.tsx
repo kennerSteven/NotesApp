@@ -1,4 +1,6 @@
+import { useState, useEffect, useRef } from "react";
 import ButtonAct from "../Ui/ButtonActions/ButtonAct";
+import "../TodoList/TodoList.css";
 
 interface prop {
   title: string;
@@ -10,27 +12,70 @@ interface prop {
 export default function TableTodo({
   title,
   date,
-  functionBtnAct,
   functionBtnDelet,
+  functionBtnAct,
 }: prop) {
+  const [actions, setActions] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  function showActions() {
+    setActions(true);
+  }
+
+  // 🔹 Hook para cerrar al hacer click fuera
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setActions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div>
-      <div className="d-flex align-items-center justify-content-between rounded shadow-sm p-3 my-3">
-        <div className="d-flex flex-column">
-          <h5 className="fw-bold">{title}</h5>
-          <small>{date.toString()}</small>
+    <div
+      ref={containerRef}
+      className="TaskContainer"
+      onMouseLeave={() => setActions(false)} //  Cierra al salir del contenedor
+    >
+      <div className="d-flex align-items-center justify-content-between gap-3 Task">
+        <div className="d-flex align-items-center gap-3">
+          <div>
+            <input className="radioInput" type="radio" />
+          </div>
+          <div className="d-flex flex-column">
+            <p className="m-0 nameTask">{title}</p>
+            <small>{date.toString()}</small>
+          </div>
         </div>
-        <div className="d-flex gap-2">
-          <ButtonAct
-            Action="update"
-            functionBtnAct={functionBtnAct}
-            label="Update"
-          />
-          <ButtonAct
-            Action="delete"
-            functionBtnAct={functionBtnDelet}
-            label="Delete"
-          />
+        <div className="d-flex align-items-center">
+          {actions && (
+            <div className="d-flex flex-column rounded">
+              <div className="d-flex">
+                <ButtonAct
+                  Action="update"
+                  functionBtnAct={functionBtnAct}
+                  label="Update"
+                />
+                <ButtonAct
+                  Action="delete"
+                  functionBtnAct={functionBtnDelet}
+                  label="Delete"
+                />
+              </div>
+            </div>
+          )}
+          <i
+            className="bi bi-three-dots-vertical"
+            onClick={showActions}
+            style={{ cursor: "pointer" }}
+          ></i>
         </div>
       </div>
     </div>

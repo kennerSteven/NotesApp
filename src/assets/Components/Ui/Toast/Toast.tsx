@@ -9,21 +9,21 @@ interface props {
 export default function Toast({ icon, titleText, text }: props) {
   const setStyleIcon =
     icon === "success"
-      ? "toastSuccess  bi bi-check-lg"
+      ? "toastSuccess  bi bi-check-circle"
       : "toastDanger  bi bi-x-circle-fill";
 
-  return (
-    <div className="toast d-flex justify-content-end ">
-      <div className="ToastContainer  ps-3">
-        <div className="d-flex gap-3 ">
-          <div>
-            <i className={`icon ${setStyleIcon}`}></i>
-          </div>
+  const setTypeToast =
+    icon === "success" ? "toastContainerSuccess " : "toastContainerDanger ";
 
-          <div className="d-flex flex-column">
+  return (
+    <div className="toast d-flex justify-content-center">
+      <div className="ps-3">
+        <div className={`${setTypeToast}  ToastContainer`}>
+          <div className="d-flex gap-1 align-items-center">
             <div>
-              <p className="m-0 titleToast">{text}</p>
+              <i className={`icon ${setStyleIcon}`}></i>
             </div>
+
             <div>
               <small>{titleText}</small>
             </div>

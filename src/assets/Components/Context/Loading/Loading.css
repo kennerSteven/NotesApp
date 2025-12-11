@@ -1,0 +1,16 @@
+.loadingContainer {
+  position: fixed;
+
+  border: none;
+}
+
+.loadingContent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(242, 242, 242, 0);
+  backdrop-filter: blur(1px);
+  z-index: 1000;
+}

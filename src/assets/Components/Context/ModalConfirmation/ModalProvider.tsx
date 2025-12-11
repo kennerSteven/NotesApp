@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import useToast from "../Toast/UseToast";
+
 import { ModalContext } from "./ModalContext";
-import { useLoadingContext } from "../Loading/UseLoading";
+
 import type { optionsOpenModal } from "./Type";
 interface props {
   children: React.ReactNode;

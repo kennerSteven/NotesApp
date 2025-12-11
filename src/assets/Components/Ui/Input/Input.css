@@ -1,11 +1,11 @@
-input {
+.inputTask {
   border: none;
-  padding: 12px 6px;
+  padding: 12px 10px;
+  width: 350px;
   border-radius: 10px;
   border: 1px solid #efefef;
 }
-
-input:focus {
+.inputTask:focus {
   outline: none;
 }
 

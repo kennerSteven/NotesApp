@@ -1,165 +1,130 @@
-import { useState } from "react";
-import Button from "../Ui/Button/Button";
-import Input from "../Ui/Input/Input";
-import TableTodo from "./TableTodo";
-import "./TodoList.css";
-import useModal from "../Context/ModalConfirmation/UseModal";
-import useToast from "../Context/Toast/UseToast";
-import ModalEdit from "./ModalEdit";
+// import { useEffect, useReducer, useState } from "react";
+// import Button from "../Ui/Button/Button";
+// import Input from "../Ui/Input/Input";
+// import TableTodo from "./TableTodo";
+// import "./TodoList.css";
+// import useModal from "../Context/ModalConfirmation/UseModal";
+// import useToast from "../Context/Toast/UseToast";
+// import ModalEdit from "./ModalEdit";
+// import { InitialState } from "./types";
+// import ReducerTodoList from "./HandleTodo";
+// import { useLoadingContext } from "../Context/Loading/UseLoading";
+// import Loading from "../Context/Loading/Loading";
+// import Sidebar from "../Layout/Sidebar";
+// import ActionPanel from "../Layout/ActionPanel";
 
-interface task {
-  date: string;
-  name: string;
-  id: string;
-}
+// export default function TodoList() {
+//   const { isLoading, setIsLoading } = useLoadingContext();
+//   const [EnoughTask, setEnoughTask] = useState<string>("");
+//   const [state, dispatch] = useReducer(ReducerTodoList, InitialState);
+//   console.log(state);
 
-export default function TodoList() {
-  const [value, setValue] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [showEdit, setShowEdit] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<task[]>([]);
+//   const { openModal } = useModal();
+//   const { show } = useToast();
+//   const [valueEdit, setValueEdit] = useState<string>("");
 
+//   useEffect(() => {
+//     if (state.tasks.length === 0) {
+//       setEnoughTask("Sin tareas");
+//     } else {
+//       setEnoughTask("");
+//     }
+//   }, [state.tasks.length]);
 
+//   const cantidadTareas = state.tasks.length;
 
-  
-  const { openModal } = useModal();
-  const { show } = useToast();
+//   console.log("Cantidad de tareas", cantidadTareas);
 
-  const [idEdit, setIdEdit] = useState<string>("");
-  const [valueEdit, setValueEdit] = useState<string>("");
+//   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+//     dispatch({ type: "SET_VALUE", valueInput: e.target.value });
+//   }
 
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
+//   function AddTask() {
+//     dispatch({ type: "ADD_TASK" });
+//     show({
+//       text: "Task has been created!",
+//       title: "Task created",
+//       icon: "success",
+//     });
+//     dispatch({ type: "SET_VALUE", valueInput: "" });
+//   }
 
-    setValue(e.target.value);
-  }
+//   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+//     e.preventDefault();
+//     if (state.valueInput.trim() === "") {
+//       show({
+//         text: "Please write a task",
+//         title: "Task created",
+//         icon: "danger",
+//       });
+//       return dispatch({ type: "SET_ERROR", error: "Please write a task" });
+//     }
+//     openModal({
+//       textModal: "Are you right to create this task?",
+//       titleModal: "Create Task",
+//       onConfirm: AddTask,
+//     });
+//   }
 
-  function addTask() {
-    const date = new Date();
-    const dateFormated = date.toLocaleTimeString();
-    const idAutomatic = crypto.randomUUID();
+//   function deleteTask(id: string) {
+//     dispatch({ type: "DELETE_TASK", id: id });
+//   }
 
-    setTasks((prev) => [
-      ...prev,
-      { id: idAutomatic, date: dateFormated, name: value },
-    ]);
+//   function confirmDelete(id: string) {
+//     openModal({
+//       textModal: "Are you right to delete this task?",
+//       titleModal: "Create Task",
+//       onConfirm: () => deleteTask(id),
+//     });
+//   }
 
-    console.log(tasks);
-    showToaster();
-  }
+//   function modalUpdate(id: string, name: string) {
+//     dispatch({ type: "OPEN_UPDATE", id: id, name: name, showEdit: true });
+//   }
 
-  function showToaster() {
-    show({
-      title: "Accion completada",
-      text: "La accion fue completada exitosamente!",
-      icon: "success",
-    });
-  }
+//   function handleInputEdit(e: React.ChangeEvent<HTMLInputElement>) {
+//     setValueEdit(e.target.value);
+//   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (value.trim() === "") {
-      return setError("Please insert a task");
-    }
-    openModal({
-      textModal: "Are you right to create this task?",
-      titleModal: "Create Task",
-      onConfirm: addTask,
-    });
+//   function acceptEdit() {
+//     dispatch({ type: "UPDATE_TASK" });
+//   }
 
-    setValue("");
-    setError("");
-  }
+//   // function closeEditModal() {
+//   //   setShowEdit(false);
+//   // }
 
-  function deleteTask(id: string) {
-    setTasks((prev) => prev.filter((item) => item.id !== id));
-  }
+//   function vsa() {}
 
-  function confirmDelete(id: string) {
-    openModal({
-      textModal: "Are you right to delete this task?",
-      titleModal: "Create Task",
-      onConfirm: () => deleteTask(id),
-    });
-  }
+//   if (isLoading) {
+//     return <Loading />;
+//   } else {
+//     return (
+//       <div>
+//         <form onSubmit={handleSubmit}>
+//           <div className="menuInputTitle ">
+//             <div className="contentMenuInput d-flex flex-column justify-content-end  align-items-end  w-100  ">
 
-  function modalUpdate(id: string, name: string) {
-    setShowEdit(true);
-    setValueEdit(name);
-    setIdEdit(id);
-  }
+//               <div className="d-flex align-items-center  gap-3 m-2">
+//                 <div>
+//                   <Button colorMode={false} labelButton="Add Task" />
+//                 </div>
+//                 <div>
+//                   <Input
+//                     placeholder="Write a task..."
+//                     label="New task"
+//                     value={state.valueInput}
+//                     name=""
+//                     onChange={handleInput}
+//                     error=""
+//                   />
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
 
-  function handleInputEdit(e: React.ChangeEvent<HTMLInputElement>) {
-    setValueEdit(e.target.value);
-  }
-
-  function AceptEdit() {
-    setShowEdit(false);
-
-    const date = new Date();
-    const dateFormated = date.toLocaleTimeString();
-
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === idEdit
-          ? { ...task, name: valueEdit, date: dateFormated, id: idEdit }
-          : task
-      )
-    );
-  }
-
-  function closeEditModal() {
-    setShowEdit(false);
-  }
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className=" d-flex justify-content-center align-items-center min-vh-100">
-          <div className="toDoContainer" style={{ minWidth: "500px" }}>
-            <h2 className="py-3 fw-bold text-center">Todo list!</h2>
-            <div className="d-flex gap-2 justify-content-center align-items-center">
-              <div>
-                <Input
-                  placeholder="Write a task..."
-                  label="New task"
-                  value={value}
-                  name=""
-                  onChange={handleInput}
-                  error=""
-                />
-                {error && <small className="text-danger pt-2">{error}</small>}
-              </div>
-              <div>
-                <Button colorMode={false} labelButton="Add Task" />
-              </div>
-            </div>
-            {tasks.map((item) => (
-              <div key={item.id}>
-                <TableTodo
-                  title={item.name}
-                  date={item.date}
-                  functionBtnAct={() => modalUpdate(item.id, item.name)}
-                  functionBtnDelet={() => confirmDelete(item.id)}
-                />
-              </div>
-            ))}
-
-            {showEdit && (
-              <div>
-                <ModalEdit
-                  textModal="Please write anythig to edit this task"
-                  titleModal="Update task"
-                  AcceptFunction={AceptEdit}
-                  CancelFunction={closeEditModal}
-                  onChange={handleInputEdit}
-                  value={valueEdit}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      </form>
-    </div>
-  );
-}
+//         </form>
+//       </div>
+//     );
+//   }
+// }

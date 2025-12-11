@@ -25,7 +25,12 @@ export default function ModalEdit({
         <div className="modalContainer">
           <h2 className="titleModal">{titleModal}</h2>
           <p>{textModal}</p>
-          <input type="text" onChange={onChange} value={value} />
+          <input
+            className="inputTask"
+            type="text"
+            onChange={onChange}
+            value={value}
+          />
           <div className="d-flex justify-content-end align-items-center gap-2">
             <div>
               <button onClick={CancelFunction} className="btnOutline">

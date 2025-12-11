@@ -2,7 +2,7 @@
   border: none;
   padding: 7px 10px;
   border-radius: 10px;
-
+  background-color: transparent;
   color: white;
   transition: transform 0.2s ease-in;
 }
@@ -12,9 +12,9 @@
 }
 
 .btnActUpdate {
-  background-color: #0d6efd;
+  color: #0d6efd;
 }
 
 .btnActDelete {
-  background-color: #dc3545;
+  color: #dc3545;
 }
