@@ -11,10 +11,10 @@ body {
   z-index: 9999;
 
   align-items: center;
-  width: 250px;
-  padding: 11px 20px;
+  width: 270px;
+  padding: 3px 18px;
   border-radius: 10px;
-  font-size: 19px;
+  font-size: 14px;
   font-weight: 500;
   color: white;
 }
@@ -23,11 +23,10 @@ small {
   font-size: 15px;
 }
 
-.toastContainerSuccess,
 .toastContainerDanger {
-  color: black;
+  background-color: #e02e2a;
+  color: rgb(255, 255, 255);
   box-shadow: 0 3px 4px rgb(194, 194, 194);
-  background: #ffffff;
 }
 
 .icon {
@@ -36,10 +35,14 @@ small {
 }
 
 /* colores por tipo */
+
+.toastContainerSuccess {
+  background-color: #28a745;
+  color: rgb(255, 255, 255);
+}
+
 .toastSuccess {
-  color: #198754;
 }
 
 .toastDanger {
-  color: #dc3545;
 }

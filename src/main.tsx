@@ -8,18 +8,23 @@ import ToastComponent from "./assets/Components/Context/Toast/ToastComponent";
 import LoadingComponent from "./assets/Components/Context/Loading/LoadingComponent";
 
 import Tasks from "./assets/Components/TodoList/Tasks";
-import TaskProvider from "./assets/Components/Context/ToDoList/Tasks/TaskProvider"; // ✅ usar el Provider
+import TaskProvider from "./assets/Components/Context/ToDoList/Tasks/TaskProvider";
+import ShowModalTaskProvider from "./assets/Components/Context/ToDoList/Tasks/CreateTask/ShowModal";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ModalProvider>
-      <ToastComponent>
-        <LoadingComponent>
-          <TaskProvider>
-            <Tasks />
-          </TaskProvider>
-        </LoadingComponent>
-      </ToastComponent>
-    </ModalProvider>
+    <ShowModalTaskProvider>
+      {" "}
+      {/* ✅ debe envolver todo */}
+      <ModalProvider>
+        <ToastComponent>
+          <LoadingComponent>
+            <TaskProvider>
+              <Tasks />
+            </TaskProvider>
+          </LoadingComponent>
+        </ToastComponent>
+      </ModalProvider>
+    </ShowModalTaskProvider>
   </StrictMode>
 );

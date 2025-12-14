@@ -1,33 +1,34 @@
-import Button from "../../../../Ui/Button/Button";
-import Input from "../../../../Ui/Input/Input";
-import { useFnTask } from "../useReducer";
+import GeneralButton from "../../../../Ui/GeneralButton/GeneralButton";
+import { useContext } from "react";
+import { showModalContext } from "../CreateTask/ShowModal";
+import CreateTask from "../CreateTask/CreateTask";
 
 export default function FooderTask() {
-  const { state, objetFuncTasks } = useFnTask();
-  const { valueInput } = state; //  aquí está el valor del input
-  const { handleInput, handleSubmit } = objetFuncTasks; //  aquí las funciones
+  const modalContext = useContext(showModalContext);
+
+  if (modalContext === null) {
+    throw new Error("Error");
+  }
+
+  const { showModalTask, setShowModalTask } = modalContext;
 
   return (
     <div>
-      <form
-        onSubmit={handleSubmit}
-        className="d-flex align-items-center gap-3 m-2 "
-      >
+      <div className="d-flex align-items-center gap-3 m-2 ">
         <div>
-          <Button colorMode={false} labelButton="Add Task" />
-        </div>
-
-        <div>
-          <Input
-            placeholder="Write a task..."
-            label="New task"
-            value={valueInput} // ✅ ahora sí accedes al state
-            name="task"
-            onChange={handleInput} // ✅ función del contexto
-            error=""
+          <GeneralButton
+            colorMode={false}
+            labelButton="Add Task"
+            onClick={() => setShowModalTask(true)}
           />
         </div>
-      </form>
+
+        {showModalTask && (
+          <div>
+            <CreateTask />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

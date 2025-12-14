@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import ButtonAct from "../Ui/ButtonActions/ButtonAct";
-import "../TodoList/TodoList.css";
+import "../TodoList/TableTodo.css";
 
 interface prop {
+  iconCategory: string;
   title: string;
   date: string;
   functionBtnAct: () => void;
@@ -14,6 +15,7 @@ export default function TableTodo({
   date,
   functionBtnDelet,
   functionBtnAct,
+  iconCategory,
 }: prop) {
   const [actions, setActions] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,7 +24,6 @@ export default function TableTodo({
     setActions(true);
   }
 
-  // 🔹 Hook para cerrar al hacer click fuera
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -42,16 +43,23 @@ export default function TableTodo({
     <div
       ref={containerRef}
       className="TaskContainer"
-      onMouseLeave={() => setActions(false)} //  Cierra al salir del contenedor
+      onMouseLeave={() => setActions(false)}
     >
       <div className="d-flex align-items-center justify-content-between gap-3 Task">
         <div className="d-flex align-items-center gap-3">
           <div>
-            <input className="radioInput" type="radio" />
+            <input className="radioInput fs-1" type="radio" />
           </div>
           <div className="d-flex flex-column">
-            <p className="m-0 nameTask">{title}</p>
-            <small>{date.toString()}</small>
+            <div className="d-flex gap-2">
+              <p className="m-0" style={{ fontWeight: "600" }}>
+                {title}
+              </p>
+              <i className={iconCategory}></i>
+            </div>
+            <small className="text-muted">
+              To completed in {date.toString()}
+            </small>
           </div>
         </div>
         <div className="d-flex align-items-center">

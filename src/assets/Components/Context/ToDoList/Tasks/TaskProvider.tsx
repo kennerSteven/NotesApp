@@ -1,7 +1,7 @@
-import { useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { ContextTask } from "./ContextTask";
 import ReducerTask from "./ReducerTask";
-
+import { showModalContext } from "./CreateTask/ShowModal";
 import useToast from "../../Toast/UseToast";
 import useModal from "../../ModalConfirmation/UseModal";
 import { InitialState } from "./types.task";
@@ -25,8 +25,17 @@ export default function TaskProvider({ children }: Props) {
     }
   }, [state.tasks.length]);
 
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch({ type: "SET_VALUE", valueInput: e.target.value });
+  function handleInputName(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: "SET_VALUE_NAME", valueName: e.target.value });
+  }
+
+  function handleInputDate(e: { value: Date | null }) {
+    const date: any = e.value?.toLocaleDateString();
+    dispatch({ type: "SET_VALUE_DATE", valueDate: date });
+  }
+
+  function handleInputCategory(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: "SET_VALUE_CATEGORY", valueCategory: e.target.value });
   }
 
   function AddTask() {
@@ -36,19 +45,21 @@ export default function TaskProvider({ children }: Props) {
       title: "Task created",
       icon: "success",
     });
-    dispatch({ type: "SET_VALUE", valueInput: "" });
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (state.valueInput.trim() === "") {
+    const validate =
+      !state.valueName || !state.valueDate || !state.valueCategory;
+
+    if (validate) {
       show({
-        text: "Please write a task",
+        text: "Please complete all fields",
         title: "Task error",
         icon: "danger",
       });
-      dispatch({ type: "SET_ERROR", error: "Please write a task" });
+      dispatch({ type: "SET_ERROR", error: "Please complete all fields" });
       return;
     }
 
@@ -57,6 +68,10 @@ export default function TaskProvider({ children }: Props) {
       titleModal: "Create Task",
       onConfirm: AddTask,
     });
+
+    console.log(`Value name task : ${state.valueName}`);
+    console.log(`Value category task : ${state.valueCategory}`);
+    console.log(`Value date task : ${state.valueDate}`);
   }
 
   function deleteTask(id: string) {
@@ -91,7 +106,9 @@ export default function TaskProvider({ children }: Props) {
     modalUpdate,
     confirmDelete,
     handleSubmit,
-    handleInput,
+    handleInputName,
+    handleInputDate,
+    handleInputCategory,
   };
 
   return (

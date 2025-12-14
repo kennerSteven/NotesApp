@@ -4,11 +4,15 @@ export interface Task {
   name: string;
   id: string;
   date: string;
+  category: string;
+  dateToComplete: string;
 }
 
 export interface PropsTasks {
   AddTask: () => void;
-  handleInput: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInputName: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInputDate: (e: { value: Date | null }) => void;
+  handleInputCategory: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   deleteTask: (id: string) => void;
   confirmDelete: (id: string) => void;
@@ -25,8 +29,10 @@ export interface State {
   idEdit: string;
   valueEdit: string;
   deleteId: string;
-  valueInput: string;
   enoughTask: string;
+  valueName: string;
+  valueDate: any;
+  valueCategory: string;
 }
 
 export const InitialState: State = {
@@ -37,18 +43,21 @@ export const InitialState: State = {
   showEdit: false,
   valueEdit: "",
   deleteId: "",
-  valueInput: "",
+  valueName: "",
+  valueDate: null,
+  valueCategory: "",
   enoughTask: "",
 };
 
-/* Tipo final del Context */
 export interface TaskContextType {
   state: State;
   objetFuncTasks: PropsTasks;
 }
 
 export type Action =
-  | { type: "SET_VALUE"; valueInput: string }
+  | { type: "SET_VALUE_NAME"; valueName: string }
+  | { type: "SET_VALUE_DATE"; valueDate: Date | null }
+  | { type: "SET_VALUE_CATEGORY"; valueCategory: string }
   | { type: "SET_ERROR"; error: string }
   | { type: "ADD_TASK" }
   | { type: "OPEN_UPDATE"; id: string; name: string; showEdit: boolean }

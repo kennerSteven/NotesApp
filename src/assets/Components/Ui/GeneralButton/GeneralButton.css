@@ -25,10 +25,3 @@
   background-color: #262628;
   transform: scale(1.07) rotate(-2deg);
 }
-
-.cancelButton {
-  background-color: white;
-  border: none;
-  margin: 0 10px;
-  color: #2f2f2f;
-}

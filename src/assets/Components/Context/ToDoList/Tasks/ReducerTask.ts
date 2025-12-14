@@ -1,8 +1,16 @@
 import type { Action, State } from "./types.task";
 export default function ReducerTask(state: State, action: Action): State {
   switch (action.type) {
-    case "SET_VALUE":
-      return { ...state, valueInput: action.valueInput };
+    case "SET_VALUE_CATEGORY":
+      return { ...state, valueCategory: action.valueCategory };
+
+    case "SET_VALUE_DATE":
+      return { ...state, valueDate: action.valueDate };
+
+    case "SET_VALUE_NAME":
+      return { ...state, valueName: action.valueName };
+
+    //Get value of all inputs
 
     case "ADD_TASK": {
       const dateFormated = new Date().toLocaleTimeString();
@@ -12,9 +20,17 @@ export default function ReducerTask(state: State, action: Action): State {
         ...state,
         tasks: [
           ...state.tasks,
-          { id: idAutomatic, date: dateFormated, name: state.valueInput },
+          {
+            id: idAutomatic,
+            date: dateFormated,
+            name: state.valueName,
+            category: state.valueCategory,
+            dateToComplete: state.valueDate as any,
+          },
         ],
-        value: "",
+        valueCategory: "",
+        valueDate: "",
+        valueName: "",
         error: "",
       };
     }

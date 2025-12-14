@@ -4,11 +4,12 @@ import { useFnTask } from "../useReducer";
 
 export default function ContentTask() {
   const { state, objetFuncTasks } = useFnTask();
-  const { enoughTask, valueEdit } = state;
+  const { enoughTask, valueEdit, valueDate } = state;
   const { acceptEdit, handleInputEdit, modalUpdate, confirmDelete } =
     objetFuncTasks;
 
   function asdd() {}
+
   return (
     <div>
       {state.showEdit && (
@@ -30,8 +31,19 @@ export default function ContentTask() {
         {state.tasks.map((item) => (
           <div key={item.id} className="">
             <TableTodo
+              iconCategory={
+                item.category === "work"
+                  ? "bi-briefcase-fill text-primary"
+                  : item.category === "personal"
+                  ? "bi-person-fill text-danger"
+                  : item.category === "study"
+                  ? "bi-book-fill text-success"
+                  : item.category === "other"
+                  ? "bi-three-dots text-muted"
+                  : ""
+              }
               title={item.name}
-              date={item.date}
+              date={item.dateToComplete}
               functionBtnAct={() => modalUpdate(item.id, item.name)}
               functionBtnDelet={() => confirmDelete(item.id)}
             />
