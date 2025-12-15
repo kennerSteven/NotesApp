@@ -15,7 +15,7 @@
 .modalContentTask {
   position: fixed;
 
-  width: 550px;
+  width:550px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 5px 15px rgba(91, 91, 91, 0.3);
   border: none;

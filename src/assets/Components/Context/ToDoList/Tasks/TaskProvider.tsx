@@ -1,11 +1,10 @@
-import { useContext, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { ContextTask } from "./ContextTask";
 import ReducerTask from "./ReducerTask";
-import { showModalContext } from "./CreateTask/ShowModal";
+
 import useToast from "../../Toast/UseToast";
 import useModal from "../../ModalConfirmation/UseModal";
 import { InitialState } from "./types.task";
-import type { PropsTasks } from "./types.task";
 
 interface Props {
   children: React.ReactNode;
@@ -18,20 +17,22 @@ export default function TaskProvider({ children }: Props) {
   const { show } = useToast();
 
   useEffect(() => {
-    if (state.tasks.length === 0) {
-      dispatch({ type: "ENOUGH_TASK", enoughTask: "No tasks available" });
-    } else {
-      dispatch({ type: "ENOUGH_TASK", enoughTask: "" });
-    }
+    dispatch({
+      type: "ENOUGH_TASK",
+      enoughTask: state.tasks.length === 0 ? "No tasks available" : "",
+    });
   }, [state.tasks.length]);
 
   function handleInputName(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch({ type: "SET_VALUE_NAME", valueName: e.target.value });
   }
 
-  function handleInputDate(e: { value: Date | null }) {
-    const date: any = e.value?.toLocaleDateString();
-    dispatch({ type: "SET_VALUE_DATE", valueDate: date });
+  function handleInputDate(payload: { value: string | null } | null) {
+    const date = payload?.value ?? "";
+    dispatch({
+      type: "SET_VALUE_DATE",
+      valueDate: date,
+    });
   }
 
   function handleInputCategory(e: React.ChangeEvent<HTMLInputElement>) {
@@ -50,16 +51,47 @@ export default function TaskProvider({ children }: Props) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const validate =
-      !state.valueName || !state.valueDate || !state.valueCategory;
+    let hasError = false;
 
-    if (validate) {
+    if (state.valueName.trim() === "") {
+      dispatch({
+        type: "ERROR_NAME",
+        ErrorName: "Please write a name",
+      });
+
+      hasError = true;
+    } else {
+      dispatch({ type: "ERROR_NAME", ErrorName: "" });
+    }
+
+    if (state.valueCategory === "") {
+      dispatch({
+        type: "ERROR_CATEGORY",
+        ErrorCategory: "Please select a category",
+      });
+
+      hasError = true;
+    } else {
+      dispatch({ type: "ERROR_CATEGORY", ErrorCategory: "" });
+    }
+
+    if (state.valueDate === "") {
+      dispatch({
+        type: "ERROR_DATE",
+        ErrorDate: "Please choose a date",
+      });
+
+      hasError = true;
+    } else {
+      dispatch({ type: "ERROR_DATE", ErrorDate: "" });
+    }
+
+    if (hasError) {
       show({
-        text: "Please complete all fields",
-        title: "Task error",
+        text: "Please,complete all camps!",
+        title: "Task created",
         icon: "danger",
       });
-      dispatch({ type: "SET_ERROR", error: "Please complete all fields" });
       return;
     }
 
@@ -69,13 +101,16 @@ export default function TaskProvider({ children }: Props) {
       onConfirm: AddTask,
     });
 
-    console.log(`Value name task : ${state.valueName}`);
-    console.log(`Value category task : ${state.valueCategory}`);
-    console.log(`Value date task : ${state.valueDate}`);
+    console.log("New task created:", state.tasks);
   }
 
   function deleteTask(id: string) {
     dispatch({ type: "DELETE_TASK", id });
+    show({
+      text: "Task has been deleted!",
+      title: "",
+      icon: "success",
+    });
   }
 
   function confirmDelete(id: string) {
@@ -86,23 +121,57 @@ export default function TaskProvider({ children }: Props) {
     });
   }
 
-  function modalUpdate(id: string, name: string) {
-    dispatch({ type: "OPEN_UPDATE", id, name, showEdit: true });
+  function modalUpdate(
+    id: string,
+    nameEdit: string,
+    statusEdit: string,
+    dateToDoEdit: string ,
+    categoryEdit: string
+  ) {
+    dispatch({
+      type: "OPEN_UPDATE",
+      id,
+      nameEdit,
+      showEdit: true,
+      statusEdit,
+      dateToDoEdit,
+      categoryEdit,
+    });
   }
 
-  function handleInputEdit(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch({ type: "VALUE_EDIT", valueEdit: e.target.value });
+  function handleNameEdit(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: "EDIT_NAME", editName: e.target.value });
+  }
+  function handleStateEdit(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: "EDIT_STATE", editState: e.target.value });
+  }
+
+  function handleDateToDoEdit(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: "EDIT_DATETODO", editDateTodo: e.target.value });
+    console.log("Date",state.valueDate)
+  }
+
+  function handleCategoryEdit(e: React.ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: "EDIT_CATEGORY", editCategory: e.target.value });
   }
 
   function acceptEdit() {
     dispatch({ type: "UPDATE_TASK" });
+       show({
+        text: "Task has been updated!",
+        title: "Task created",
+        icon: "success",
+      });
   }
 
-  const objetFuncTasks: PropsTasks = {
+  const objetFuncTasks = {
     AddTask,
     deleteTask,
     acceptEdit,
-    handleInputEdit,
+    handleCategoryEdit,
+    handleDateToDoEdit,
+    handleStateEdit,
+    handleNameEdit,
     modalUpdate,
     confirmDelete,
     handleSubmit,
@@ -112,12 +181,7 @@ export default function TaskProvider({ children }: Props) {
   };
 
   return (
-    <ContextTask.Provider
-      value={{
-        state,
-        objetFuncTasks,
-      }}
-    >
+    <ContextTask.Provider value={{ state, objetFuncTasks }}>
       {children}
     </ContextTask.Provider>
   );

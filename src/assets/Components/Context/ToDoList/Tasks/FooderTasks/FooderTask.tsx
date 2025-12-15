@@ -13,8 +13,8 @@ export default function FooderTask() {
   const { showModalTask, setShowModalTask } = modalContext;
 
   return (
-    <div>
-      <div className="d-flex align-items-center gap-3 m-2 ">
+    <div >
+      <div className="d-flex align-items-center gap-3 mx-3 ">
         <div>
           <GeneralButton
             colorMode={false}

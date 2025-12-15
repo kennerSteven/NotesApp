@@ -4,14 +4,33 @@ import { useFnTask } from "../useReducer";
 
 export default function ContentTask() {
   const { state, objetFuncTasks } = useFnTask();
-  const { enoughTask, valueEdit, valueDate } = state;
-  const { acceptEdit, handleInputEdit, modalUpdate, confirmDelete } =
-    objetFuncTasks;
+  const { enoughTask, dateToDoEdit, editName, editCategory } = state;
+  const {
+    acceptEdit,
+    handleCategoryEdit,
+    handleDateToDoEdit,
+    handleNameEdit,
+    modalUpdate,
+    confirmDelete,
+  } = objetFuncTasks;
 
   function asdd() {}
 
   return (
     <div>
+      {state.tasks.length === 0 && (
+        <div
+          className="d-flex align-items-center justify-content-center m- "
+          style={{ marginTop: "150px" }}
+        >
+          <div className="d-flex flex-column align-items-center  p-2 rounded  ">
+          <i className="bi bi-clipboard-x text-muted" style={{fontSize:"60px"}}></i>
+
+            <small className="text-muted">{enoughTask}</small>
+          </div>
+        </div>
+      )}
+
       {state.showEdit && (
         <div>
           <ModalEdit
@@ -19,13 +38,15 @@ export default function ContentTask() {
             titleModal="Update task"
             AcceptFunction={acceptEdit}
             CancelFunction={asdd}
-            onChange={handleInputEdit}
-            value={valueEdit}
+            valueDateToDoTask={dateToDoEdit}
+            handleDateInput={handleDateToDoEdit}
+            handleName={handleNameEdit}
+            valueName={editName}
+            valueCategory={editCategory}
+            handleInputCategory={handleCategoryEdit}
           />
         </div>
       )}
-
-      <p>{enoughTask}</p>
 
       <div className="row flex-column mx-3  gap-4">
         {state.tasks.map((item) => (
@@ -43,8 +64,17 @@ export default function ContentTask() {
                   : ""
               }
               title={item.name}
-              date={item.dateToComplete}
-              functionBtnAct={() => modalUpdate(item.id, item.name)}
+              dateCreated={item.date}
+              date={item.dateToComplete as string}
+              functionBtnAct={() =>
+                modalUpdate(
+                  item.id,
+                  item.name,
+                  item.status,
+                  item.dateToComplete ?? "",
+                  item.category
+                )
+              }
               functionBtnDelet={() => confirmDelete(item.id)}
             />
           </div>

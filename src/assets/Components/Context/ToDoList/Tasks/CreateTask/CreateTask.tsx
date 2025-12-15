@@ -1,5 +1,4 @@
 import Input from "../../../../Ui/Input/Input";
-import { Calendar } from "primereact/calendar";
 
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -27,37 +26,46 @@ export default function CreateTask() {
   }
   const { setShowModalTask } = modalContext;
 
-  const { valueName, valueDate, valueCategory } = state;
+  const {
+    valueName,
+    valueDate,
+    valueCategory,
+    ErrorName,
+    ErrorCategory,
+    ErrorDate,
+  } = state;
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 modalContainerTask ">
       <form
         onSubmit={handleSubmit}
-        className="d-flex flex-column gap-3 bg-white rounded shadow-sm modalContentTask px-5"
+        className="d-flex flex-column gap-3 bg-white rounded shadow-sm modalContentTask px-5 "
       >
-        <h2 className="fw-bold">Create a new task</h2>
+        <h2 className="fw-bold py-3">Create a new task</h2>
+        <div className="row ">
+          <div className="col-lg-7">
+            <label className="fw-bold mb-2">New Task</label>
+            <Input
+              placeholder="Write a task"
+              name="task"
+              value={valueName}
+              onChange={handleInputName}
+              error=""
+              label="New task"
+            />
+            {ErrorName && <small className="text-danger">{ErrorName}</small>}
+          </div>
 
-        <div>
-          <label className="fw-bold mb-2">New Task</label>
-          <Input
-            placeholder="Write a task"
-            name="task"
-            value={valueName}
-            onChange={handleInputName}
-            error=""
-            label="New task"
-          />
-        </div>
-
-        <div>
-          <label className="fw-bold mb-2">Date to do the task</label>
-          <Calendar
-            value={valueDate}
-            onChange={handleInputDate as any}
-            dateFormat="dd/mm/yy"
-            showIcon
-            className="w-100"
-          />
+          <div className="col-lg-5">
+            <label className="fw-bold mb-2">Date to do the task</label>
+            <input
+              className="inputTask"
+              type="date"
+              value={valueDate}
+              onChange={(e) => handleInputDate({ value: e.target.value })}
+            />
+            {ErrorDate && <small className="text-danger">{ErrorDate}</small>}
+          </div>
         </div>
 
         <div className="d-flex gap-3 mt-3 flex-wrap">
@@ -101,6 +109,9 @@ export default function CreateTask() {
             </div>
           ))}
         </div>
+        {ErrorCategory && (
+          <small className="text-danger">{ErrorCategory}</small>
+        )}
 
         <div className="d-flex justify-content-end mt-4">
           <div className="d-flex align-items-center">

@@ -29,7 +29,7 @@ export default function ActionPanel({
   if (hour >= 6 && hour < 12) {
     iconDay = "bi bi-sunrise text-warning";
   } else if (hour >= 12 && hour < 18) {
-    iconDay = "bi bi-brightness-high text-primary";
+    iconDay = "bi bi-brightness-high text-success";
   } else {
     iconDay = "bi bi-moon-stars text-info";
   }
@@ -43,7 +43,7 @@ export default function ActionPanel({
               <Sidebar />
             </div>
             <div className="d-flex flex-column justify-content-between w-100">
-              {/* 🔹 TopBar */}
+         
               <div className="TopBar d-flex align-items-center p-2 justify-content-between">
                 <div>
                   <h2 className="titleTopbar">Tasks to do!</h2>
@@ -67,7 +67,7 @@ export default function ActionPanel({
                 {contentActionPanel}
               </div>
 
-              <div className="d-flex justify-content-end BottonSection py-2">
+              <div className="d-flex justify-content-end BottonSection py-2 ">
                 {BottonSection}
               </div>
             </div>

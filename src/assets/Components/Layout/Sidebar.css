@@ -8,7 +8,7 @@ body {
   border-radius: 10px;
   backdrop-filter: blur(1px);
   transition: all 0.2s ease-in-out;
-  padding: 3px 11px;
+  padding: 3px 10px;
 }
 .btnSidebar:hover {
   transform: scale(1.04) rotate(1deg);
@@ -16,7 +16,7 @@ body {
 
 .btnSidebar i {
   color: white;
-  font-size: 25px;
+  font-size: 20px;
   border-radius: 5px;
   font-weight: bold;
 }
